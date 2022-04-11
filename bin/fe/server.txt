@@ -1,0 +1,1 @@
+{"name":"TraVinhTest","ip":"10.86.70.17","folder_path":"/home/adminvm/TraVinh/TTKTXH","folder_path_local":"/Users/tom/Documents/React/TV"}

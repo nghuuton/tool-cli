@@ -1,12 +1,11 @@
 #! /usr/bin/env node
 console.log("The CLI is working 🚀");
 const inquirer = require("inquirer");
-const shell = require("shelljs");
 const { updateServiceRemoveImageAndContainer } = require("./container");
-const path = process.cwd();
 const { initCLI } = require("./config/init.js");
-const FE = "root@10.86.70.17:/home/adminvm/TraVinh/TTKTXH";
-
+const { settingHA } = require("./haproxy/stdSystem");
+const { settingVituarlIP } = require("./vituarlIP");
+const { inputFE } = require("./fe");
 initCLI();
 
 inquirer
@@ -14,16 +13,25 @@ inquirer
 		{
 			type: "list",
 			name: "type",
-			message: "Select Platform:",
-			choices: ["FE", "BE"],
+			message: "Select:",
+			choices: ["FE", "BE", "HAProxy", "Vituarl IP", "Vituarl IP + HAProxy"],
 		},
 	])
 	.then((answers) => {
 		if (answers.type === "FE") {
-			shell.exec(`scp -r ${path}/build ${FE}`);
+			inputFE();
 		}
 		if (answers.type === "BE") {
 			deployBE();
+		}
+		if (answers.type === "HAProxy") {
+			settingHA();
+		}
+		if (answers.type === "Vituarl IP") {
+			settingVituarlIP();
+		}
+		if (answers.type === "Vituarl IP + HAProxy") {
+			settingVituarlIP(true);
 		}
 	});
 
@@ -34,7 +42,7 @@ function deployBE() {
 				type: "list",
 				name: "type",
 				message: "Select:",
-				choices: ["Update Service", "Build New"],
+				choices: ["Update Service"],
 			},
 		])
 		.then((answers) => {

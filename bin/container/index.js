@@ -16,7 +16,7 @@ function updateServiceRemoveImageAndContainer() {
 			{
 				type: "list",
 				name: "containerName",
-				message: "Chọn service cần update:",
+				message: "Select service to update:",
 				choices: containerNames,
 			},
 		];
